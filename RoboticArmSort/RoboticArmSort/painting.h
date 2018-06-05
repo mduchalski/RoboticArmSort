@@ -4,5 +4,6 @@
 
 void PaintBase(HDC);
 void PaintGui(HDC);
+void PaintArm(HDC, const double, const double);
 
 #endif
