@@ -35,11 +35,13 @@ void PaintAnimate(HWND hWnd)
 		(INT)(ArmPoint0().X + ARM_LEN_1 + ARM_LEN_2 + 0.75f * SCALE) + 1, 
 		(INT)(window.Y + 0.8f * window.Height) - 1 };
 
-	InvalidateRect(hWnd, &toInvalidate, TRUE);
+	Bitmap bmp(toInvalidate.right, toInvalidate.bottom);
+	Graphics buffer(&bmp);
+	PaintArm(buffer);
 
 	Graphics graphics(hdc);
-	PaintArm(graphics);
-
+	InvalidateRect(hWnd, &toInvalidate, TRUE);
+	graphics.DrawImage(&bmp, 0, 0);
 	EndPaint(hWnd, &ps);
 }
 
