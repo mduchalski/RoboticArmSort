@@ -8,17 +8,17 @@ PointF ArmPoint0()
 		0.8f * window.Height - 5.0f * SCALE);
 }
 
-PointF ArmPoint1(const double _alfa)
+PointF ArmPoint1()
 {
-	return PointF(window.X + window.Width / 2.0f + ARM_LEN_1 * (REAL)cos(_alfa),
+	return PointF(window.X + window.Width / 2.0f + ARM_LEN_1 * (REAL)cos(angle.first),
 		window.Y + 0.8f * window.Height - 5.0f * SCALE - ARM_LEN_1 * (REAL)sin(
-			_alfa));
+			angle.first));
 }
 
-PointF ArmPoint2(const double _alfa, const double _beta)
+PointF ArmPoint2()
 {
-	return PointF(window.X + window.Width / 2.0f + ARM_LEN_1 * (REAL)cos(_alfa)
-		+ ARM_LEN_2 * (REAL)cos(_beta), window.Y + 0.8f * window.Height -
-		5.0f * SCALE - ARM_LEN_1 * (REAL)sin(_alfa) - ARM_LEN_2 * (REAL)sin(
-			_beta));
+	return PointF(window.X + window.Width / 2.0f + ARM_LEN_1 * (REAL)cos(angle.first)
+		+ ARM_LEN_2 * (REAL)cos(angle.second), window.Y + 0.8f * window.Height -
+		5.0f * SCALE - ARM_LEN_1 * (REAL)sin(angle.first) - ARM_LEN_2 * (REAL)sin(
+			angle.second));
 }

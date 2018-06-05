@@ -4,7 +4,7 @@
 #include "stdafx.h"
 
 PointF ArmPoint0();
-PointF ArmPoint1(const double);
-PointF ArmPoint2(const double, const double);
+PointF ArmPoint1();
+PointF ArmPoint2();
 
 #endif

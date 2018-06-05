@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="animation.h" />
     <ClInclude Include="drawing.h" />
     <ClInclude Include="misc.h" />
     <ClInclude Include="painting.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="animation.cpp" />
     <ClCompile Include="drawing.cpp" />
     <ClCompile Include="misc.cpp" />
     <ClCompile Include="painting.cpp" />
