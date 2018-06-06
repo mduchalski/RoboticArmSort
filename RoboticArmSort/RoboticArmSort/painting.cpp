@@ -3,6 +3,7 @@
 #include "painting.h"
 #include "drawing.h"
 #include "misc.h"
+#include "blocks.h"
 
 // Paints non-changing user interface elements
 void PaintGuiBase(HDC hdc)
@@ -12,23 +13,9 @@ void PaintGuiBase(HDC hdc)
 	// TEXT HERE
 }
 
-// Paints other (not UI) non-changing elements on the screen
-void PaintBase(HDC hdc)
-{
-	Graphics graphics(hdc);
-
-	// Draw a single horizontal line in the middle
-	graphics.DrawLine(&Pen(BASE_COLOR),
-		PointF(window.X, window.Y + 0.8f * window.Height),
-		PointF(window.X + window.Width, window.Y + 0.8f * window.Height));
-}
-
 // Paints all window components that change during an animation
-void PaintAnimate(HWND hWnd)
+void OnPaint(HDC hdc)
 {
-	PAINTSTRUCT ps;
-	HDC hdc = BeginPaint(hWnd, &ps);
-
 	RECT toInvalidate{ (INT)(ArmPoint0().X - ARM_LEN_1 - ARM_LEN_2 - 
 			0.75f * SCALE) - 1,
 		(INT)(ArmPoint0().Y - ARM_LEN_1 - ARM_LEN_2 - 0.75f * SCALE) - 1, 
@@ -37,12 +24,17 @@ void PaintAnimate(HWND hWnd)
 
 	Bitmap bmp(toInvalidate.right, toInvalidate.bottom);
 	Graphics buffer(&bmp);
+
+	buffer.FillRectangle(&SolidBrush(Color::White), Rect(toInvalidate.left, toInvalidate.top, toInvalidate.right - toInvalidate.left, toInvalidate.bottom - toInvalidate.top));
 	PaintArm(buffer);
+	PaintBlocks(buffer, blocks);
+	// Draw a single horizontal line in the middle
+	buffer.DrawLine(&Pen(BASE_COLOR),
+		PointF(window.X, window.Y + 0.8f * window.Height),
+		PointF(window.X + window.Width, window.Y + 0.8f * window.Height));
 
 	Graphics graphics(hdc);
-	InvalidateRect(hWnd, &toInvalidate, TRUE);
 	graphics.DrawImage(&bmp, 0, 0);
-	EndPaint(hWnd, &ps);
 }
 
 // Paint the robotic arm with a terminating magnet
@@ -58,6 +50,24 @@ void PaintArm(Graphics& graphics)
 		1.5f * SCALE);
 	// Draw terminating magnet
 	DrawMagnet(graphics, &SolidBrush(ARM_COLOR_2), ArmPoint2(),
-		0.75f * SCALE, ARM_MAGNET_OFFSET, 1.5f * SCALE);
+		1.375f * BLOCK_WIDTH / 2.0f, MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT,
+		BLOCK_WIDTH);
+}
+
+// Paints all blocks in the given vector
+void PaintBlocks(Graphics& graphics, const std::vector<Block>& _blocks)
+{
+	for (std::vector<Block>::const_iterator cit = blocks.begin();
+		cit != blocks.end(); cit++)
+		if (cit->mounted)
+			graphics.FillRectangle(&SolidBrush(Color::DarkBlue), RectF(
+				ArmPoint2().X - 0.5f * BLOCK_WIDTH,
+				ArmPoint2().Y - MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT,
+				BLOCK_WIDTH, cit->height));
+		else
+			graphics.FillRectangle(&SolidBrush(Color::DarkBlue), RectF(
+				ArmPoint0().X + cit->relativePos,
+				window.Y + 0.8f * window.Height - cit->height,
+				BLOCK_WIDTH, cit->height));
 }
 
