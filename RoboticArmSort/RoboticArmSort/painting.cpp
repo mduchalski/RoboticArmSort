@@ -17,28 +17,30 @@ void PaintGuiBase(HDC hdc)
 	format.SetAlignment(StringAlignment::StringAlingmentCenter);
 
 	graphics.DrawString(L"Tryb Pracy", -1, &font,
-	RectF((REAL)2, (REAL)2, (REAL)8, (REAL)2),
+	RectF((REAL)2* SCALE, (REAL)2 * SCALE, (REAL)8 * SCALE, (REAL)2 * SCALE),
 	&format, &brush);
 
 	graphics.DrawString(L"Predkosc", -1, &font,
-		RectF((REAL)2, (REAL)5, (REAL)8, (REAL)2),
+		RectF((REAL)2 * SCALE, (REAL)5 * SCALE, (REAL)8 * SCALE, (REAL)2 * SCALE),
 		&format, &brush);
 
 	graphics.DrawString(L"Nagrywanie", -1, &font,
-		RectF((REAL)2, (REAL)8, (REAL)8, (REAL)2),
+		RectF((REAL)2 * SCALE, (REAL)8 * SCALE, (REAL)8 * SCALE, (REAL)2 * SCALE),
 		&format, &brush);
 
 	graphics.DrawString(L"Automatyczny", -1, &font,
-		RectF((REAL)10, (REAL)2, (REAL)8, (REAL)1),
+		RectF((REAL)10 * SCALE, (REAL)2 * SCALE, (REAL)8 * SCALE, (REAL)1 * SCALE),
 		&format, &brush);
 
 	graphics.DrawString(L"Manualny", -1, &font,
-		RectF((REAL)10, (REAL)3, (REAL)8, (REAL)1),
+		RectF((REAL)10 * SCALE, (REAL)3 * SCALE, (REAL)8 * SCALE, (REAL)1 * SCALE),
 		&format, &brush);
 
 	graphics.DrawString(L"Strzalki - sterowanie Spacja - uchwyt", -1, &font,
-		RectF((REAL)1, (REAL)11, (REAL)18, (REAL)1),
+		RectF((REAL)1 * SCALE, (REAL)11 * SCALE, (REAL)18 * SCALE, (REAL)1 * SCALE),
 		&format, &brush);
+
+
 }
 
 
