@@ -49,4 +49,14 @@ void PaintGuiBase(HDC hdc)
 void PaintBase(HDC hdc)
 {
 	Graphics graphics(hdc);
+
+	Pen blackPen(BASE_COLOR);
+
+	int x = 1*SCALE;
+	int y = 1*SCALE;
+	int width = 18*SCALE;
+	int height = 11*SCALE;
+
+	graphics.DrawRectangle(&blackPen, x, y, width, height);
+
 }
