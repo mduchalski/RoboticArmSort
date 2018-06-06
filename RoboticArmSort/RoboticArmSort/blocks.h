@@ -17,5 +17,8 @@ public:
 
 
 std::vector<Block> RandBlocks();
+//bool NoneGrabbed(const std::vector<Block>&);
+void GrabAttempt(std::vector<Block>&);
+//void LaydownAttempt(std::vector<Block>&);
 
 #endif

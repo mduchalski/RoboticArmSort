@@ -40,3 +40,19 @@ std::vector<Block> RandBlocks()
 
 	return result;
 }
+
+// Attempts grabbing nearest block by the arm
+void GrabAttempt(std::vector<Block>& _blocks)
+{
+	for (std::vector<Block>::iterator it = _blocks.begin(); it != _blocks.end();
+		it++)
+		if (std::abs(ArmPoint0().X + it->relativePos + 0.5f * BLOCK_WIDTH -
+			ArmPoint2().X) < GRAB_ERROR &&
+			std::abs(window.Y + 0.8f * window.Height - it->height -
+			ArmPoint2().Y - MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT) < GRAB_ERROR)
+		{
+			it->mounted = true;
+			break;
+		}
+}
+

@@ -35,7 +35,7 @@ void PaintGui(Graphics& graphics)
 	graphics.DrawRectangle(&Pen(BASE_COLOR), SCALE, SCALE, 18 * SCALE, 11 * SCALE);
 }
 
-// Paints all window components that change during an animation
+// Paints all window components
 void OnPaint(HDC hdc)
 {
 	RECT toInvalidate{ (INT)(ArmPoint0().X - ARM_LEN_1 - ARM_LEN_2 -
@@ -85,7 +85,7 @@ void PaintBlocks(Graphics& graphics, const std::vector<Block>& _blocks)
 		if (cit->mounted)
 			graphics.FillRectangle(&SolidBrush(Color::DarkBlue), RectF(
 				ArmPoint2().X - 0.5f * BLOCK_WIDTH,
-				ArmPoint2().Y - MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT,
+				ArmPoint2().Y + MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT,
 				BLOCK_WIDTH, cit->height));
 		else
 			graphics.FillRectangle(&SolidBrush(Color::DarkBlue), RectF(
