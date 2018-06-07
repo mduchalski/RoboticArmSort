@@ -38,21 +38,15 @@ void PaintGui(Graphics& graphics)
 // Paints all window components
 void OnPaint(HDC hdc)
 {
-	RECT toInvalidate{ (INT)(ArmPoint0().X - ARM_LEN_1 - ARM_LEN_2 -
-		0.75f * SCALE) - 1,
-		(INT)(ArmPoint0().Y - ARM_LEN_1 - ARM_LEN_2 - 0.75f * SCALE) - 1,
-		(INT)(ArmPoint0().X + ARM_LEN_1 + ARM_LEN_2 + 0.75f * SCALE) + 1,
-		(INT)(window.Y + 0.8f * window.Height) - 1 };
-
-	Bitmap bmp(toInvalidate.right, toInvalidate.bottom);
+	Bitmap bmp(window.X + window.Width, window.Y + window.Height);
 	Graphics buffer(&bmp);
 
-	buffer.FillRectangle(&SolidBrush(Color::White), Rect(toInvalidate.left, toInvalidate.top, toInvalidate.right - toInvalidate.left, toInvalidate.bottom - toInvalidate.top));
+	buffer.FillRectangle(&SolidBrush(Color::White), window);
 	PaintArm(buffer);
 	PaintBlocks(buffer, blocks);
 	PaintGui(buffer);
 	// Draw a single horizontal line in the middle
-	buffer.DrawLine(&Pen(BASE_COLOR),
+	buffer.DrawLine(&Pen(Color::Black),
 		PointF(window.X, window.Y + 0.8f * window.Height),
 		PointF(window.X + window.Width, window.Y + 0.8f * window.Height));
 
