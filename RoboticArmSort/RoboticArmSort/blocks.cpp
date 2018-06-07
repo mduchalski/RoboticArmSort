@@ -56,3 +56,24 @@ void GrabAttempt(std::vector<Block>& _blocks)
 		}
 }
 
+void LaydownAttempt(std::vector<Block>& _blocks)
+{
+	for (std::vector<Block>::iterator it = _blocks.begin(); it != _blocks.end();
+		it++)
+		if (it->mounted && std::abs(window.Y + 0.8f * window.Height -
+			(ArmPoint2().Y + MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT + it->height)) < GRAB_ERROR)
+		{
+			it->mounted = false;
+			it->relativePos = ArmPoint2().X - ArmPoint0().X - 0.5f * BLOCK_WIDTH;
+		}
+}
+
+// Determines if any of the blocks are currently mounted to the ar
+bool NoneGrabbed(const std::vector<Block>& _blocks)
+{
+	for (std::vector<Block>::const_iterator cit = _blocks.begin();
+		cit != _blocks.end(); cit++)
+		if (cit->mounted)
+			return false;
+	return true;
+}
