@@ -42,6 +42,9 @@
     <ClInclude Include="blocks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="arm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -63,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="blocks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="arm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

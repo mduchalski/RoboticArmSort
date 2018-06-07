@@ -3,11 +3,12 @@
 #include "painting.h"
 #include "drawing.h"
 #include "misc.h"
+#include "arm.h"
 
 // Paints non-changing user interface elements
 void PaintGui(Graphics& graphics)
 {
-	SolidBrush brush(BASE_COLOR);
+	SolidBrush brush(Color::Black);
 
 	Font font(FontFamily::GenericSansSerif(), SCALE, 0, Gdiplus::UnitPixel);
 
@@ -32,7 +33,7 @@ void PaintGui(Graphics& graphics)
 		RectF((REAL)1 * SCALE, (REAL)11 * SCALE, (REAL)18 * SCALE, (REAL)1 * SCALE),
 		&format, &brush);
 
-	graphics.DrawRectangle(&Pen(BASE_COLOR), SCALE, SCALE, 18 * SCALE, 11 * SCALE);
+	graphics.DrawRectangle(&Pen(Color::Black), SCALE, SCALE, 18 * SCALE, 11 * SCALE);
 }
 
 // Paints all window components
@@ -42,8 +43,10 @@ void OnPaint(HDC hdc)
 	Graphics buffer(&bmp);
 
 	buffer.FillRectangle(&SolidBrush(Color::White), window);
-	PaintArm(buffer);
-	PaintBlocks(buffer, blocks);
+	DrawArm(buffer, arm);
+	for (std::vector<Block>::const_iterator cit = blocks.begin();
+		cit != blocks.end(); cit++)
+		cit->Draw(buffer);
 	PaintGui(buffer);
 	// Draw a single horizontal line in the middle
 	buffer.DrawLine(&Pen(Color::Black),
@@ -52,38 +55,4 @@ void OnPaint(HDC hdc)
 
 	Graphics graphics(hdc);
 	graphics.DrawImage(&bmp, 0, 0);
-}
-
-// Paint the robotic arm with a terminating magnet
-void PaintArm(Graphics& graphics)
-{
-	// Draw a "magnet" shaped arm mount
-	DrawMagnet(graphics, &SolidBrush(ARM_COLOR_1), ArmPoint0(),
-		0.75f * SCALE, ARM_OFFSET, 3.0f * SCALE);
-	// Draw two arm parts
-	DrawWideCLine(graphics, &SolidBrush(ARM_COLOR_1), ArmPoint1(), ArmPoint2(),
-		1.5f * SCALE);
-	DrawWideCLine(graphics, &SolidBrush(ARM_COLOR_2), ArmPoint0(), ArmPoint1(),
-		1.5f * SCALE);
-	// Draw terminating magnet
-	DrawMagnet(graphics, &SolidBrush(ARM_COLOR_2), ArmPoint2(),
-		1.375f * BLOCK_WIDTH / 2.0f, MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT,
-		BLOCK_WIDTH);
-}
-
-// Paints all blocks in the given vector
-void PaintBlocks(Graphics& graphics, const std::vector<Block>& _blocks)
-{
-	for (std::vector<Block>::const_iterator cit = blocks.begin();
-		cit != blocks.end(); cit++)
-		if (cit->mounted)
-			graphics.FillRectangle(&SolidBrush(Color::DarkBlue), RectF(
-				ArmPoint2().X - 0.5f * BLOCK_WIDTH,
-				ArmPoint2().Y + MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT,
-				BLOCK_WIDTH, cit->height));
-		else
-			graphics.FillRectangle(&SolidBrush(Color::DarkBlue), RectF(
-				ArmPoint0().X + cit->relativePos,
-				window.Y + 0.8f * window.Height - cit->height,
-				BLOCK_WIDTH, cit->height));
 }

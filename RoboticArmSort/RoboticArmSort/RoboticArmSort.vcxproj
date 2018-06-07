@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="animation.h" />
+    <ClInclude Include="arm.h" />
     <ClInclude Include="drawing.h" />
     <ClInclude Include="blocks.h" />
     <ClInclude Include="misc.h" />
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="arm.cpp" />
     <ClCompile Include="blocks.cpp" />
     <ClCompile Include="drawing.cpp" />
     <ClCompile Include="misc.cpp" />

@@ -11,15 +11,23 @@ class Block
 public:
 	Block(REAL, REAL);
 
-	REAL relativePos, height;
-	bool mounted;
+	void Draw(Graphics&) const;
+	void ToArm();
+	void FromArm(REAL);
+
+	bool IsMounted() const;
+	REAL Height() const;
+
+	REAL LeftLine() const;
+	REAL RightLine() const;
+	REAL HighLine() const;
+
+private:
+	REAL height, relativePos;
+	bool grabbedByArm;
 };
 
-
 std::vector<Block> RandBlocks();
-bool NoneGrabbed(const std::vector<Block>&);
-void GrabAttempt(std::vector<Block>&);
-void LaydownAttempt(std::vector<Block>&);
 
 
 #endif

@@ -7,23 +7,62 @@
 // guarantee that it will possible for the arm to reach each block
 REAL GetLeftBound()
 {
-	return ArmPoint0().X + (MAX_BLOCK_HEIGHT - ARM_OFFSET) / (REAL)tan(asin(
+	return(MAX_BLOCK_HEIGHT - ARM_OFFSET) / (REAL)tan(asin(
 		(double)((ARM_LEN_2 + MAX_BLOCK_HEIGHT - ARM_OFFSET) / ARM_LEN_1)));
 }
 
 REAL GetRightBound()
 {
-	return 2.0f * ((REAL)sqrt(ARM_LEN_1 * ARM_LEN_1 - (ARM_LEN_2 +
-		MAX_BLOCK_HEIGHT - ARM_OFFSET) *  (ARM_LEN_2 + MAX_BLOCK_HEIGHT -
-		ARM_OFFSET)) + ArmPoint0().X) - GetLeftBound();
+	return 2.0f * (REAL)sqrt(ARM_LEN_1 * ARM_LEN_1 - (ARM_LEN_2 +
+		MAX_BLOCK_HEIGHT - ARM_OFFSET) * (ARM_LEN_2 + MAX_BLOCK_HEIGHT -
+		ARM_OFFSET)) - GetLeftBound();
 }
 
-// Constructor for Block structure
+// Constructor for Block
 Block::Block(REAL _relativePos, REAL _height)
 {
 	relativePos = _relativePos;
 	height = _height;
-	mounted = false;
+	grabbedByArm = false;
+}
+
+void Block::Draw(Graphics& graphics) const
+{
+	if (!grabbedByArm)
+		graphics.FillRectangle(&SolidBrush(Color::DarkBlue), LeftLine(), 
+			HighLine(), BLOCK_WIDTH, height);
+}
+
+void Block::ToArm()
+{
+	grabbedByArm = true;
+}
+void Block::FromArm(REAL pos)
+{
+	relativePos = pos - CenterLine();
+	grabbedByArm = false;
+}
+
+bool Block::IsMounted() const
+{
+	return grabbedByArm;
+}
+REAL Block::Height() const
+{
+	return height;
+}
+
+REAL Block::LeftLine() const
+{
+	return CenterLine() + relativePos;
+}
+REAL Block::RightLine() const
+{
+	return LeftLine() + BLOCK_WIDTH;
+}
+REAL Block::HighLine() const
+{
+	return ZeroLine() - height;
 }
 
 // Distrubutes blocks with random height evenly in the permitted area
@@ -34,46 +73,8 @@ std::vector<Block> RandBlocks()
 
 	for (REAL i = GetLeftBound() + 1.25f * BLOCK_WIDTH; i < GetRightBound(); 
 		i += 1.25f * BLOCK_WIDTH)
-		result.push_back(Block(i - ArmPoint0().X,
-			MIN_BLOCK_HEIGHT + (REAL)(rand() % (int)(
-				MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT))));
+		result.push_back(Block(i, MIN_BLOCK_HEIGHT + (REAL)
+			(rand() % (int)(MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT))));
 
 	return result;
-}
-
-// Attempts grabbing nearest block by the arm
-void GrabAttempt(std::vector<Block>& _blocks)
-{
-	for (std::vector<Block>::iterator it = _blocks.begin(); it != _blocks.end();
-		it++)
-		if (std::abs(ArmPoint0().X + it->relativePos + 0.5f * BLOCK_WIDTH -
-			ArmPoint2().X) < GRAB_ERROR &&
-			std::abs(window.Y + 0.8f * window.Height - it->height -
-			ArmPoint2().Y - MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT) < GRAB_ERROR)
-		{
-			it->mounted = true;
-			break;
-		}
-}
-
-void LaydownAttempt(std::vector<Block>& _blocks)
-{
-	for (std::vector<Block>::iterator it = _blocks.begin(); it != _blocks.end();
-		it++)
-		if (it->mounted && std::abs(window.Y + 0.8f * window.Height -
-			(ArmPoint2().Y + MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT + it->height)) < GRAB_ERROR)
-		{
-			it->mounted = false;
-			it->relativePos = ArmPoint2().X - ArmPoint0().X - 0.5f * BLOCK_WIDTH;
-		}
-}
-
-// Determines if any of the blocks are currently mounted to the ar
-bool NoneGrabbed(const std::vector<Block>& _blocks)
-{
-	for (std::vector<Block>::const_iterator cit = _blocks.begin();
-		cit != _blocks.end(); cit++)
-		if (cit->mounted)
-			return false;
-	return true;
 }
