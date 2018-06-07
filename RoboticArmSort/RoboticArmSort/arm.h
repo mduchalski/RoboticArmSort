@@ -22,6 +22,7 @@ public:
 	REAL ConnectionLine() const;
 	REAL EndLine() const;
 	REAL MountLine() const;
+	REAL RightMountLine() const;
 	REAL LowLine() const;
 	REAL HighLine() const;
 	REAL LeftLine() const;

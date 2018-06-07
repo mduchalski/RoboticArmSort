@@ -82,6 +82,10 @@ REAL Arm::MountLine() const
 {
 	return EndPoint().X - BLOCK_WIDTH / 2.0f;
 }
+REAL Arm::RightMountLine() const
+{
+	return MountLine() + BLOCK_WIDTH;
+}
 REAL Arm::LowLine() const
 {
 	return max(EndLine(), MiddlePoint().Y + width / 2.0f);
@@ -101,7 +105,6 @@ REAL Arm::RightLine() const
 		MountPoint().X + 3.0f * width / 2.0f);
 }
 
-
 void DrawArm(Graphics& graphics, const Arm _arm)
 {
 	// Draw a "magnet" shaped arm mount
@@ -114,7 +117,7 @@ void DrawArm(Graphics& graphics, const Arm _arm)
 		_arm.MiddlePoint(), _arm.width);
 	// Draw terminating magnet
 	DrawMagnet(graphics, &SolidBrush(_arm.colorB), _arm.EndPoint(),
-		min(1.375f * BLOCK_WIDTH / 2.0f, _arm.width), 
+		min(BLOCK_WIDTH, _arm.width / 2.0f), 
 		MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT, BLOCK_WIDTH);
 	// Draw block if one is connected
 	graphics.FillRectangle(&SolidBrush(Color::DarkBlue), _arm.MountLine(),
