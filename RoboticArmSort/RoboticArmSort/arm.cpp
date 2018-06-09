@@ -105,6 +105,24 @@ REAL Arm::RightLine() const
 		MountPoint().X + 3.0f * width / 2.0f);
 }
 
+double Arm::Alfa() const
+{
+	return alfa;
+}
+double Arm::Beta() const
+{
+	return beta;
+}
+REAL Arm::LenA() const
+{
+	return lenA;
+}
+REAL Arm::LenB() const
+{
+	return lenB;
+}
+
+
 void DrawArm(Graphics& graphics, const Arm _arm)
 {
 	// Draw a "magnet" shaped arm mount

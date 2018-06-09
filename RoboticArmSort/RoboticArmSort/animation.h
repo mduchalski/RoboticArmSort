@@ -14,23 +14,29 @@ public:
 	// Basic actions and status checks
 	void OnTick(HWND, Arm&, const std::vector<Block>&);
 	void SetMaxSpeed(const double);
+	void UpdateSpeed(Arm&);
 
 	// Manual control actions
-	void OnKeydown(HWND, const WPARAM);
+	void OnKeydown(HWND, const WPARAM, Arm&);
 	void OnKeyup(HWND, const WPARAM);
 
 	// Automatic constrol actions
-	void GoToPos(const PointF);
+	void GoToPos(HWND, Arm&, const PointF);
+	void Move(HWND, const Arm&, bool, REAL);
 
 private:
-	double alfaMove, betaMove, maxSpeed;
-	PointF target;
+	double alfaMove, betaMove, maxSpeed, alfaTarget, betaTarget;
+	//PointF target;
 	UINT timerId;
-	bool isRunning;
+	bool isRunning, autoDirection;
 
-	void UpdateSpeed();
 	bool AutomaticMode();
 	bool DecodeKeys(const WPARAM);
+	double GetAlfaTarget(const PointF, const Arm&);
+	double GetBetaTarget(const PointF, const Arm&);
 };
+
+double AlfaFromXY(const double, const double, const PointF, const Arm&);
+double BetaFromXY(const double, const double, const PointF, const Arm&);
 
 #endif

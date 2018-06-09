@@ -28,16 +28,21 @@ public:
 	REAL LeftLine() const;
 	REAL RightLine() const;
 
+	double Alfa() const;
+	double Beta() const;
+	REAL LenA() const;
+	REAL LenB() const;
+
 	//friend bool InConflict(const Arm, const Block);
 	friend void DrawArm(Graphics&, const Arm);
 
 protected:
 	Color colorA, colorB;
 	REAL width, grabbedHeight;
-
-private:
 	double alfa, beta;
 	REAL lenA, lenB;
+
+private:
 	PointF origin;
 };
 
