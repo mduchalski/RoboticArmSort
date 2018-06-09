@@ -24,7 +24,7 @@ void Animation::OnTick(HWND hWnd, Arm& _arm, const std::vector<Block>& _blocks)
 		if (std::abs(betaTarget - _arm.Beta()) <= std::abs(betaMove))
 			betaMove = 0.0;
 		
-		if (!AutomaticMode())
+		if (std::abs(alfaMove) < 10e-3 && std::abs(betaMove) < 10e-3)
 		{
 			KillTimer(hWnd, timerId);
 			isRunning = false;
@@ -33,9 +33,12 @@ void Animation::OnTick(HWND hWnd, Arm& _arm, const std::vector<Block>& _blocks)
 	}
 
 	arm.Increment(alfaMove, betaMove);
-	if (InConflict(arm, blocks))
+	if (InConflict(arm, blocks) || !_arm.InRect(armBounds))
 	{
 		arm.Increment(-alfaMove, -betaMove);
+		isRunning = false;
+		if (AutomaticMode())
+			alfaTarget = betaTarget = M_PI + 1.0;
 		KillTimer(hWnd, TMR);
 	}
 }
@@ -104,12 +107,17 @@ void Animation::UpdateSpeed(Arm& _arm)
 
 	// For automatic mode operation, such speed ratio is found that arm moves
 	// either parrarel to X- or Y-axis
-	if (AutomaticMode() && autoDirection)
-		betaMove = -(_arm.LenA() * cos(_arm.Alfa())) * alfaMove / 
+	if (AutomaticMode())
+	{
+		if (autoDirection)
+			betaMove = -(_arm.LenA() * cos(_arm.Alfa())) * alfaMove /
 			(_arm.LenB() * cos(_arm.Beta()));
-	else if (AutomaticMode())
-		betaMove = (_arm.LenA() * sin(_arm.Alfa())) * std::abs(alfaMove) /
+		// Y-axis pararell shifting is only implemented below certain level,
+		// because it doesn't work reliably on higher ones
+		else if (_arm.EndLine() > ZeroLine() - MAX_BLOCK_HEIGHT - 20.0f)
+			betaMove = (_arm.LenA() * sin(_arm.Alfa())) * std::abs(alfaMove) /
 			(_arm.LenB() * sin(_arm.Beta()));
+	}	
 }
 
 bool Animation::AutomaticMode()

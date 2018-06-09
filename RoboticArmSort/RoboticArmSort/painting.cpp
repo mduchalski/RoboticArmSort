@@ -52,6 +52,7 @@ void OnPaint(HDC hdc)
 	buffer.DrawLine(&Pen(Color::Black),
 		PointF(window.X, window.Y + 0.8f * window.Height),
 		PointF(window.X + window.Width, window.Y + 0.8f * window.Height));
+	buffer.DrawRectangle(&Pen(Color::Red), armBounds);
 
 	Graphics graphics(hdc);
 	graphics.DrawImage(&bmp, 0, 0);

@@ -8,6 +8,8 @@
 REAL ZeroLine();
 REAL CenterLine();
 
+RectF GetBoundingRect(const Arm&);
+
 bool InConflict(const Arm&, const Block&);
 bool InConflict(const Arm&, const std::vector<Block>&);
 

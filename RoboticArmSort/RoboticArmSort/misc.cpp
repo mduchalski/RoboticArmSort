@@ -12,6 +12,25 @@ REAL CenterLine()
 	return window.X + window.Width / 2.0f;
 }
 
+RectF GetBoundingRect(const Arm& _arm)
+{
+	return RectF(_arm.MountPoint().X + BLOCKS_OFFSET - _arm.LenB() * cos(M_PI -
+		atan(BLOCKS_OFFSET / (MAX_BLOCK_HEIGHT - ARM_OFFSET)) - acos(
+		(pow(_arm.LenB(), 2.0) - pow(_arm.LenA(), 2.0) + pow(BLOCKS_OFFSET, 2.0) +
+		pow(MAX_BLOCK_HEIGHT - ARM_OFFSET, 2.0)) / (2.0 * _arm.LenB() * sqrt(
+		pow(BLOCKS_OFFSET, 2.0) + pow(MAX_BLOCK_HEIGHT - ARM_OFFSET, 2.0))))),
+		_arm.MountPoint().Y - _arm.LenA() - 10.0f,
+		sqrt(pow(_arm.LenB(), 2.0) - pow(ZeroLine() - MIN_BLOCK_HEIGHT -
+		_arm.MountPoint().Y + _arm.LenA() * sin(atan((MAX_BLOCK_HEIGHT -
+		ARM_OFFSET) / BLOCKS_OFFSET)), 2.0)) + _arm.LenA() * cos(atan(
+		(MAX_BLOCK_HEIGHT - ARM_OFFSET) / BLOCKS_OFFSET)) + 
+		_arm.LenB() * cos(M_PI - atan(BLOCKS_OFFSET / (MAX_BLOCK_HEIGHT - ARM_OFFSET))
+		- acos( (pow(_arm.LenB(), 2.0) - pow(_arm.LenA(), 2.0) + pow(BLOCKS_OFFSET, 2.0) +
+		pow(MAX_BLOCK_HEIGHT - ARM_OFFSET, 2.0)) / (2.0 * _arm.LenB() * sqrt(
+		pow(BLOCKS_OFFSET, 2.0) + pow(MAX_BLOCK_HEIGHT - ARM_OFFSET, 2.0))))),
+		_arm.LenA() + ZeroLine() - _arm.MountPoint().Y + 10.0f);
+}
+
 bool InConflict(const Arm& _arm, const Block& _block)
 {
 	if (((_arm.MountLine() <= _block.RightLine() && _arm.MountLine() >= _block.LeftLine()) ||

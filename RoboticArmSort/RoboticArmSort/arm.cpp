@@ -13,7 +13,8 @@ Arm::Arm(const REAL _lenA, const REAL _lenB, const REAL _width,
 	colorA = _colorA;
 	colorB = _colorB;
 
-	alfa = beta = M_PI / 4.0;
+	alfa = M_PI / 4.0;
+	beta = 0.0;
 	grabbedHeight = 0.0f;
 }
 
@@ -88,21 +89,25 @@ REAL Arm::RightMountLine() const
 }
 REAL Arm::LowLine() const
 {
-	return max(EndLine(), MiddlePoint().Y + width / 2.0f);
+	return max(EndLine(), MiddlePoint().Y);
 }
 REAL Arm::HighLine() const
 {
-	return min(MiddlePoint().Y - width / 2.0f, EndPoint().Y - width / 2.0f);
+	return min(MiddlePoint().Y, EndPoint().Y);
 }
 REAL Arm::LeftLine() const
 {
-	return min(min(MiddlePoint().X - width / 2.0f, EndPoint().Y - BLOCK_WIDTH / 2.0f),
-		MountPoint().X - 3.0f * width / 2.0f);
+	return min(min(MiddlePoint().X, EndPoint().X), MountPoint().X);
 }
 REAL Arm::RightLine() const
 {
-	return max(max(MiddlePoint().X + width / 2.0f, EndPoint().Y + BLOCK_WIDTH / 2.0f),
-		MountPoint().X + 3.0f * width / 2.0f);
+	return max(max(MiddlePoint().X, EndPoint().X), MountPoint().X);
+}
+
+bool Arm::InRect(const RectF rect)
+{
+	return LeftLine() > rect.X && RightLine() < rect.X + rect.Width &&
+		HighLine() > rect.Y && EndLine() < rect.Y + rect.Height;
 }
 
 double Arm::Alfa() const
