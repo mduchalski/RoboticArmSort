@@ -3,9 +3,6 @@
 #define BLOCKS_H
 #include "stdafx.h"
 
-REAL GetLeftBound();
-REAL GetRightBound();
-
 class Block
 {
 public:
@@ -28,7 +25,5 @@ private:
 };
 
 std::vector<Block> RandBlocks();
-
-
 
 #endif

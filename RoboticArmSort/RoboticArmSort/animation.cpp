@@ -56,7 +56,7 @@ void Animation::OnKeydown(HWND hWnd, const WPARAM wParam, Arm& _arm)
 
 	if (!isRunning && !AutomaticMode())
 	{
-		SetTimer(hWnd, timerId, TIMER_FREQ, NULL);
+		SetTimer(hWnd, timerId, TIMER_DELAY, NULL);
 		isRunning = true;
 	}
 }
@@ -73,11 +73,6 @@ void Animation::OnKeyup(HWND hWnd, const WPARAM wParam)
 	}	
 }
 
-void Animation::GoToPos(HWND hWnd, Arm& _arm, const PointF _target)
-{
-	return;
-}
-
 void Animation::Move(HWND hWnd, const Arm& _arm, bool direction, REAL dist)
 {
 	autoDirection = direction;
@@ -91,7 +86,7 @@ void Animation::Move(HWND hWnd, const Arm& _arm, bool direction, REAL dist)
 
 	if (AutomaticMode())
 	{
-		SetTimer(hWnd, timerId, TIMER_FREQ, NULL);
+		SetTimer(hWnd, timerId, TIMER_DELAY, NULL);
 		isRunning = true;
 	}
 }
@@ -99,11 +94,11 @@ void Animation::Move(HWND hWnd, const Arm& _arm, bool direction, REAL dist)
 void Animation::UpdateSpeed(Arm& _arm)
 {
 	if (std::abs(alfaMove) > 10e-6)
-		alfaMove = (alfaMove > 0) ? maxSpeed / (double)(1000 / TIMER_FREQ) :
-		-maxSpeed / (double)(1000 / TIMER_FREQ);
+		alfaMove = (alfaMove > 0) ? maxSpeed / (double)(1000 / TIMER_DELAY) :
+		-maxSpeed / (double)(1000 / TIMER_DELAY);
 	if (std::abs(betaMove) > 10e-6)
-		betaMove = (betaMove > 0) ? maxSpeed / (double)(1000 / TIMER_FREQ) :
-		-maxSpeed / (double)(1000 / TIMER_FREQ);
+		betaMove = (betaMove > 0) ? maxSpeed / (double)(1000 / TIMER_DELAY) :
+		-maxSpeed / (double)(1000 / TIMER_DELAY);
 
 	// For automatic mode operation, such speed ratio is found that arm moves
 	// either parrarel to X- or Y-axis
@@ -164,18 +159,4 @@ double Animation::GetBetaTarget(const PointF _target, const Arm& _arm)
 		pow(_arm.LenB(), 2.0) - pow(_arm.MountPoint().Y - _target.Y, 2.0) -
 		pow(_target.X - _arm.MountPoint().X, 2.0)) / (2 * _arm.LenA() *
 		_arm.LenB()));
-}
-
-double AlfaFromXY(const double _alfa, const double _, 
-	const PointF target, const Arm& _arm)
-{
-	return pow(target.X - _arm.MountPoint().X - _arm.LenA() * cos(_alfa), 2.0) +
-		pow(target.Y - _arm.MountPoint().Y + _arm.LenA() * sin(_alfa), 2.0)
-		- _arm.LenB() * _arm.LenB();
-}
-double BetaFromXY(const double _beta, const double _alfa,
-	const PointF target, const Arm& _arm)
-{
-	return _arm.MountPoint().X + _arm.LenA() * cos(_alfa) + _arm.LenB() * 
-		cos(_beta) - target.X;
 }

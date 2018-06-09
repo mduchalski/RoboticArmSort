@@ -3,21 +3,6 @@
 #include "RoboticArmSort.h"
 #include "misc.h"
 
-// These functions calculate range of block X-posistions in whitch there is a
-// guarantee that it will possible for the arm to reach each block
-REAL GetLeftBound()
-{
-	return(MAX_BLOCK_HEIGHT - ARM_OFFSET) / (REAL)tan(asin(
-		(double)((ARM_LEN_2 + MAX_BLOCK_HEIGHT - ARM_OFFSET) / ARM_LEN_1)));
-}
-
-REAL GetRightBound()
-{
-	return 2.0f * (REAL)sqrt(ARM_LEN_1 * ARM_LEN_1 - (ARM_LEN_2 +
-		MAX_BLOCK_HEIGHT - ARM_OFFSET) * (ARM_LEN_2 + MAX_BLOCK_HEIGHT -
-		ARM_OFFSET)) - GetLeftBound();
-}
-
 // Constructor for Block
 Block::Block(REAL _relativePos, REAL _height)
 {

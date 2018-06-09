@@ -42,9 +42,6 @@ protected:
 	REAL width, grabbedHeight;
 	double alfa, beta;
 	REAL lenA, lenB;
-
-private:
-	PointF origin;
 };
 
 #endif

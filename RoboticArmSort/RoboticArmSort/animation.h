@@ -20,8 +20,7 @@ public:
 	void OnKeydown(HWND, const WPARAM, Arm&);
 	void OnKeyup(HWND, const WPARAM);
 
-	// Automatic constrol actions
-	void GoToPos(HWND, Arm&, const PointF);
+	// Automatic control actions
 	void Move(HWND, const Arm&, bool, REAL);
 
 private:
@@ -35,8 +34,5 @@ private:
 	double GetAlfaTarget(const PointF, const Arm&);
 	double GetBetaTarget(const PointF, const Arm&);
 };
-
-double AlfaFromXY(const double, const double, const PointF, const Arm&);
-double BetaFromXY(const double, const double, const PointF, const Arm&);
 
 #endif

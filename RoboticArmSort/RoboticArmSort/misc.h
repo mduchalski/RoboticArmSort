@@ -9,12 +9,9 @@ REAL ZeroLine();
 REAL CenterLine();
 
 RectF GetBoundingRect(const Arm&);
+RectF GetClientRectAlt(HWND hWnd);
 
 bool InConflict(const Arm&, const Block&);
 bool InConflict(const Arm&, const std::vector<Block>&);
-
-std::pair<bool, double> Bisection(double f(const double, const double, 
-	const PointF, const Arm&), const double, const PointF, const Arm&,
-	double, double, const double);
 
 #endif
