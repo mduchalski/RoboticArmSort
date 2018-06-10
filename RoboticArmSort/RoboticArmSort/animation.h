@@ -6,30 +6,45 @@
 #include "arm.h"
 #include "blocks.h"
 
+enum AnimationAction { Nothing = 0, HorizontalMove, VerticalMove, VerticalGrab, 
+	VerticalLayoff, VerticalCheck };
+
+struct AnimationActionCont
+{
+	AnimationAction action;
+	REAL parameter, retVal;
+	bool finished;
+
+	// Does not compare return value and finished status
+	bool operator ==(AnimationActionCont);
+};
+
 class Animation
 {
 public:
 	Animation(const UINT, const double);
 
 	// Basic actions and status checks
-	void OnTick(HWND, Arm&, const std::vector<Block>&);
+	void OnTick(HWND, Arm&, const std::vector<Block>&, 
+		std::queue<AnimationActionCont>& actions);
 	void SetMaxSpeed(const double);
+	void Start(HWND); 
 	void UpdateSpeed(Arm&);
 
 	// Manual control actions
 	void OnKeydown(HWND, const WPARAM, Arm&);
 	void OnKeyup(HWND, const WPARAM);
 
-	// Automatic control actions
-	void Move(HWND, const Arm&, bool, REAL);
-
 private:
 	double alfaMove, betaMove, maxSpeed, alfaTarget, betaTarget;
-	//PointF target;
+	AnimationActionCont action;
 	UINT timerId;
-	bool isRunning, autoDirection;
+	bool isRunning;
+	
+	void Stop(HWND);
+	void Move(HWND, const Arm&);
 
-	bool AutomaticMode();
+	void DecodeInRange(const Arm&);
 	bool DecodeKeys(const WPARAM);
 	double GetAlfaTarget(const PointF, const Arm&);
 	double GetBetaTarget(const PointF, const Arm&);
