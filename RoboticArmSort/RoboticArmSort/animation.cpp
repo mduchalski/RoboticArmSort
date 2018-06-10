@@ -52,7 +52,7 @@ void Animation::OnTick(HWND hWnd, Arm& _arm, std::vector<Block>& _blocks,
 		if (action.action == VerticalCheck)
 		{
 			action.finished = true;
-			action.retVal = _arm.LowLine() - ZeroLine();
+			action.retVal = ZeroLine() - _arm.LowLine();
 		}
 		else if (action.action == VerticalGrab)
 		{
@@ -93,14 +93,15 @@ void Animation::OnKeyup(HWND hWnd, const WPARAM wParam)
 
 void Animation::Move(HWND hWnd, const Arm& _arm)
 {
-	PointF target = _arm.EndPoint();
-
+	PointF target;
 	if (action.action == HorizontalMove)
-		target = target + PointF(action.parameter, 0.0f);
+		target = PointF(action.parameter, _arm.EndPoint().Y);
 	else if (action.action == VerticalMove)
-		target = target + PointF(0.0f, action.parameter);
+		target = PointF(_arm.EndPoint().X, action.parameter);
 	else if (action.action != Nothing)
 		target = target + PointF(0.0f, ZeroLine() - _arm.EndLine() + 25.0f);
+	ZeroLine();
+	_arm.MountPoint();
 
 	alfaTarget = GetAlfaTarget(target, _arm);
 	betaTarget = GetBetaTarget(target, _arm);
@@ -130,7 +131,7 @@ void Animation::UpdateSpeed(Arm& _arm)
 	// Y-axis pararell shifting is only implemented below certain level,
 	// because it doesn't work reliably on higher ones
 	else if (action.action > HorizontalMove && 
-		_arm.EndLine() > ZeroLine() - MAX_BLOCK_HEIGHT - 20.0f)
+		_arm.EndLine() >= ZeroLine() - MAX_BLOCK_HEIGHT)
 		betaMove = (_arm.LenA() * sin(_arm.Alfa())) * -alfaMove /
 		(_arm.LenB() * sin(_arm.Beta()));
 }

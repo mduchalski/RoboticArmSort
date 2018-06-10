@@ -18,7 +18,7 @@ RectF GetBoundingRect(const Arm& _arm)
 		atan(BLOCKS_OFFSET / (MAX_BLOCK_HEIGHT - ARM_OFFSET)) - acos(
 		(pow(_arm.LenB(), 2.0) - pow(_arm.LenA(), 2.0) + pow(BLOCKS_OFFSET, 2.0) +
 		pow(MAX_BLOCK_HEIGHT - ARM_OFFSET, 2.0)) / (2.0 * _arm.LenB() * sqrt(
-		pow(BLOCKS_OFFSET, 2.0) + pow(MAX_BLOCK_HEIGHT - ARM_OFFSET, 2.0))))),
+		pow(BLOCKS_OFFSET, 2.0) + pow(MAX_BLOCK_HEIGHT - ARM_OFFSET, 2.0))))) - 100.0f,
 		_arm.MountPoint().Y - _arm.LenA() - 10.0f,
 		sqrt(pow(_arm.LenB(), 2.0) - pow(ZeroLine() - MIN_BLOCK_HEIGHT -
 		_arm.MountPoint().Y + _arm.LenA() * sin(atan((MAX_BLOCK_HEIGHT -
@@ -27,7 +27,7 @@ RectF GetBoundingRect(const Arm& _arm)
 		_arm.LenB() * cos(M_PI - atan(BLOCKS_OFFSET / (MAX_BLOCK_HEIGHT - ARM_OFFSET))
 		- acos( (pow(_arm.LenB(), 2.0) - pow(_arm.LenA(), 2.0) + pow(BLOCKS_OFFSET, 2.0) +
 		pow(MAX_BLOCK_HEIGHT - ARM_OFFSET, 2.0)) / (2.0 * _arm.LenB() * sqrt(
-		pow(BLOCKS_OFFSET, 2.0) + pow(MAX_BLOCK_HEIGHT - ARM_OFFSET, 2.0))))),
+		pow(BLOCKS_OFFSET, 2.0) + pow(MAX_BLOCK_HEIGHT - ARM_OFFSET, 2.0))))) + 100.0f,
 		_arm.LenA() + ZeroLine() - _arm.MountPoint().Y + 10.0f);
 }
 
@@ -64,4 +64,9 @@ void AttemptLayDown(Arm& _arm, std::vector<Block>& _blocks)
 {
 	for (std::vector<Block>::iterator it = _blocks.begin(); it != _blocks.end(); it++)
 		_arm.AttemptLayDown(*it);
+}
+
+bool SortByHeight(const std::pair<REAL, REAL> a, const std::pair<REAL, REAL> b)
+{
+	return a.second < b.second;
 }

@@ -104,6 +104,11 @@ REAL Arm::RightLine() const
 	return max(max(MiddlePoint().X, EndPoint().X), MountPoint().X);
 }
 
+REAL Arm::Width() const
+{
+	return width;
+}
+
 bool Arm::InRect(const RectF rect)
 {
 	return LeftLine() > rect.X && RightLine() < rect.X + rect.Width &&

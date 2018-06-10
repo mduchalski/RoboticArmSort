@@ -27,12 +27,14 @@ public:
 	REAL HighLine() const;
 	REAL LeftLine() const;
 	REAL RightLine() const;
+	
 	bool InRect(const RectF);
 
 	double Alfa() const;
 	double Beta() const;
 	REAL LenA() const;
 	REAL LenB() const;
+	REAL Width() const;
 
 	//friend bool InConflict(const Arm, const Block);
 	friend void DrawArm(Graphics&, const Arm);

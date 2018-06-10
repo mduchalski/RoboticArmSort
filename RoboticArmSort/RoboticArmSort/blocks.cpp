@@ -56,9 +56,9 @@ std::vector<Block> RandBlocks()
 	std::vector<Block> result;
 	srand((unsigned int)time(NULL));
 
-	for (REAL i = CenterLine() + BLOCKS_OFFSET + 1.25f * BLOCK_WIDTH;
-		i < armBounds.X + armBounds.Width - BLOCK_WIDTH; 
-		i += 1.25f * BLOCK_WIDTH)
+	for (REAL i = CenterLine() + BLOCKS_OFFSET + 1.5f * BLOCK_WIDTH;
+		i < armBounds.X + armBounds.Width - 2.0f * BLOCK_WIDTH; 
+		i += 1.5f * BLOCK_WIDTH)
 		result.push_back(Block(i, MIN_BLOCK_HEIGHT + (REAL)
 			(rand() % (int)(MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT - 20))));
 
