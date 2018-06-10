@@ -12,6 +12,8 @@ public:
 	void OnTick(std::queue<AnimationActionCont>&, const Arm&);
 	void InitSort(HWND, std::queue<AnimationActionCont>&, Animation&, 
 		const std::vector<Block>&, const Arm&);
+	void Swap(std::queue<AnimationActionCont>&, const Arm&,
+		const REAL, const REAL, const REAL);
 
 private:
 	std::vector<std::pair<REAL, REAL> > blockHeights;
@@ -19,8 +21,6 @@ private:
 	bool isSorting;
 
 	void FinishSort(std::queue<AnimationActionCont>&, const Arm&);
-	void Swap(std::queue<AnimationActionCont>&, const Arm&,
-		const REAL, const REAL, const REAL);
 };
 
 #endif

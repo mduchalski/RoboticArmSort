@@ -13,8 +13,8 @@ Arm::Arm(const REAL _lenA, const REAL _lenB, const REAL _width,
 	colorA = _colorA;
 	colorB = _colorB;
 
-	alfa = M_PI / 4.0;
-	beta = 0.0;
+	alfa = M_PI / 3.0;
+	beta = -M_PI / 6.0;
 	grabbedHeight = 0.0f;
 }
 

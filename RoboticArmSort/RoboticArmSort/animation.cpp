@@ -99,7 +99,7 @@ void Animation::Move(HWND hWnd, const Arm& _arm)
 	else if (action.action == VerticalMove)
 		target = PointF(_arm.EndPoint().X, action.parameter);
 	else if (action.action != Nothing)
-		target = target + PointF(0.0f, ZeroLine() - _arm.EndLine() + 25.0f);
+		target = PointF(_arm.MountPoint().X, ZeroLine() + 50.0f);
 	ZeroLine();
 	_arm.MountPoint();
 
@@ -131,9 +131,20 @@ void Animation::UpdateSpeed(Arm& _arm)
 	// Y-axis pararell shifting is only implemented below certain level,
 	// because it doesn't work reliably on higher ones
 	else if (action.action > HorizontalMove && 
-		_arm.EndLine() >= ZeroLine() - MAX_BLOCK_HEIGHT)
+		_arm.ConnectionLine() >= ZeroLine() - 2 * MAX_BLOCK_HEIGHT)
 		betaMove = (_arm.LenA() * sin(_arm.Alfa())) * -alfaMove /
 		(_arm.LenB() * sin(_arm.Beta()));
+	if (alfaMove > betaMove && alfaMove > maxSpeed / (double)(1000 / TIMER_DELAY))
+	{
+		betaMove = (betaMove / alfaMove) * maxSpeed / (double)(1000 / TIMER_DELAY);
+		alfaMove = maxSpeed / (double)(1000 / TIMER_DELAY);
+	}
+	else if (betaMove > alfaMove && betaMove > maxSpeed / (double)(1000 / TIMER_DELAY))
+	{
+		alfaMove = (alfaMove / betaMove) * maxSpeed / (double)(1000 / TIMER_DELAY);
+		betaMove = maxSpeed / (double)(1000 / TIMER_DELAY);
+	}
+
 }
 
 void Animation::Start(HWND hWnd)
