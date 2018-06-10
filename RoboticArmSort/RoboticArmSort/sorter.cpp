@@ -51,15 +51,27 @@ void Sorter::FinishSort(std::queue<AnimationActionCont>& _actionsQueue,
 {
 	std::vector<std::pair<REAL, REAL> > temp = blockHeights;
 
-	for (std::size_t i = 1; i < blockHeights.size(); i++)
-		for (std::size_t j = 0; j < blockHeights.size() - i; j++)
-			if (blockHeights[j + 1].second > blockHeights[j].second)
+	std::sort(temp.begin(), temp.end(), SortByHeight);
+
+	for (std::size_t j = 0; j < blockHeights.size(); j++)
+	{
+		for (std::size_t k = 0; k < blockHeights.size() - 1; k++)
+		{
+			if (blockHeights[k].second > blockHeights[k + 1].second)
 			{
-				Swap(_actionsQueue, _arm, blockHeights[j].first + 0.5f * BLOCK_WIDTH,
-					blockHeights[j + 1].first + 0.5 * BLOCK_WIDTH, 
+				Swap(_actionsQueue, _arm, blockHeights[k].first + 0.5f * BLOCK_WIDTH,
+					blockHeights[k + 1].first + 0.5 * BLOCK_WIDTH,
 					CenterLine() + BLOCKS_OFFSET + 2.5f * BLOCK_WIDTH);
-				swap(blockHeights[j + 1], blockHeights[j]);
+
+				swap(blockHeights[k + 1], blockHeights[k]);
+				REAL temp = blockHeights[k + 1].first;
+				blockHeights[k + 1].first = blockHeights[k].first;
+				blockHeights[k].first = temp;
 			}
+		}
+	}
+
+	std::sort(temp.begin(), temp.end(), SortByHeight);
 }
 
 void Sorter::Swap(std::queue<AnimationActionCont>& _actionsQueue, 
