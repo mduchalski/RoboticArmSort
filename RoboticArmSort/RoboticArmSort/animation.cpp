@@ -13,7 +13,7 @@ Animation::Animation(const UINT _timerId, const double _maxSpeed)
 	action = { Nothing, 0.0f, 0.0f, true };
 }
 
-void Animation::OnTick(HWND hWnd, Arm& _arm, const std::vector<Block>& _blocks,
+void Animation::OnTick(HWND hWnd, Arm& _arm, std::vector<Block>& _blocks,
 	std::queue<AnimationActionCont>& actions)
 {
 	// Handle interfacing with the queue
@@ -47,11 +47,22 @@ void Animation::OnTick(HWND hWnd, Arm& _arm, const std::vector<Block>& _blocks,
 	if (InConflict(arm, blocks) || !_arm.InRect(armBounds))
 	{
 		arm.Increment(-alfaMove, -betaMove);
-		Stop(hWnd);
+		if (!action.action)
+			Stop(hWnd);
 		if (action.action == VerticalCheck)
 		{
 			action.finished = true;
 			action.retVal = _arm.LowLine() - ZeroLine();
+		}
+		else if (action.action == VerticalGrab)
+		{
+			AttemptGrab(_arm, _blocks);
+			action.finished = true;
+		}
+		else if (action.action == VerticalLayDown)
+		{
+			AttemptLayDown(_arm, _blocks);
+			action.finished = true;
 		}
 	}
 }
@@ -82,8 +93,15 @@ void Animation::OnKeyup(HWND hWnd, const WPARAM wParam)
 
 void Animation::Move(HWND hWnd, const Arm& _arm)
 {
-	PointF target = _arm.EndPoint() + ((action.action == HorizontalMove) ? 
-		PointF(action.parameter, 0.0f) : PointF(0.0f, action.parameter));
+	PointF target = _arm.EndPoint();
+
+	if (action.action == HorizontalMove)
+		target = target + PointF(action.parameter, 0.0f);
+	else if (action.action == VerticalMove)
+		target = target + PointF(0.0f, action.parameter);
+	else if (action.action != Nothing)
+		target = target + PointF(0.0f, ZeroLine() - _arm.EndLine() + 25.0f);
+
 	alfaTarget = GetAlfaTarget(target, _arm);
 	betaTarget = GetBetaTarget(target, _arm);
 
@@ -113,7 +131,7 @@ void Animation::UpdateSpeed(Arm& _arm)
 	// because it doesn't work reliably on higher ones
 	else if (action.action > HorizontalMove && 
 		_arm.EndLine() > ZeroLine() - MAX_BLOCK_HEIGHT - 20.0f)
-		betaMove = (_arm.LenA() * sin(_arm.Alfa())) * std::abs(alfaMove) /
+		betaMove = (_arm.LenA() * sin(_arm.Alfa())) * -alfaMove /
 		(_arm.LenB() * sin(_arm.Beta()));
 }
 

@@ -7,7 +7,7 @@
 #include "blocks.h"
 
 enum AnimationAction { Nothing = 0, HorizontalMove, VerticalMove, VerticalGrab, 
-	VerticalLayoff, VerticalCheck };
+	VerticalLayDown, VerticalCheck };
 
 struct AnimationActionCont
 {
@@ -25,7 +25,7 @@ public:
 	Animation(const UINT, const double);
 
 	// Basic actions and status checks
-	void OnTick(HWND, Arm&, const std::vector<Block>&, 
+	void OnTick(HWND, Arm&, std::vector<Block>&, 
 		std::queue<AnimationActionCont>& actions);
 	void SetMaxSpeed(const double);
 	void Start(HWND); 

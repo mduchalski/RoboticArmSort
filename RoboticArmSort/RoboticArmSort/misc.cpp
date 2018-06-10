@@ -53,3 +53,15 @@ bool InConflict(const Arm& _arm, const std::vector<Block>& _blocks)
 		if (!cit->IsMounted() && InConflict(_arm, *cit)) return true;
 	return false;
 }
+
+void AttemptGrab(Arm& _arm, std::vector<Block>& _blocks)
+{
+	for (std::vector<Block>::iterator it = _blocks.begin(); it != _blocks.end(); it++)
+		_arm.AttemptGrab(*it);
+}
+
+void AttemptLayDown(Arm& _arm, std::vector<Block>& _blocks)
+{
+	for (std::vector<Block>::iterator it = _blocks.begin(); it != _blocks.end(); it++)
+		_arm.AttemptLayDown(*it);
+}

@@ -14,4 +14,7 @@ RectF GetClientRectAlt(HWND hWnd);
 bool InConflict(const Arm&, const Block&);
 bool InConflict(const Arm&, const std::vector<Block>&);
 
+void AttemptGrab(Arm&, std::vector<Block>&);
+void AttemptLayDown(Arm&, std::vector<Block>&);
+
 #endif
