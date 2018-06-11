@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #include "RoboticArmSort.h"
 #include "painting.h"
 #include "drawing.h"
@@ -9,31 +9,28 @@
 void PaintGui(Graphics& graphics)
 {
 	SolidBrush brush(Color::Black);
-
-	Font font(FontFamily::GenericSansSerif(), SCALE, 0, Gdiplus::UnitPixel);
-
+	Font font(FontFamily::GenericSansSerif(),
+		0.6f * SCALE, 0, Gdiplus::UnitPixel);
 	StringFormat format;
 	format.SetLineAlignment(StringAlignment::StringAlignmentCenter);
 	format.SetAlignment(StringAlignment::StringAlignmentCenter);
 
-	graphics.DrawString(L"Tryb pracy", -1, &font,
-		RectF((REAL)2 * SCALE, (REAL)2 * SCALE, (REAL)8 * SCALE, (REAL)2 * SCALE),
-		&format, &brush);
-
-	graphics.DrawString(L"Prêdkoœæ", -1, &font,
-		RectF((REAL)2 * SCALE, (REAL)5 * SCALE, (REAL)8 * SCALE, (REAL)2 * SCALE),
-		&format, &brush);
-
+	// UI labels
+	graphics.DrawString(L"Praca", -1, &font,
+		RectF(SCALE, SCALE, 6.0f * SCALE, SCALE), &format, &brush);
+	graphics.DrawString(L"Predkosc", -1, &font,
+		RectF(SCALE, 3.0f * SCALE, 6.0f * SCALE, SCALE), &format, &brush);
 	graphics.DrawString(L"Nagrywanie", -1, &font,
-		RectF((REAL)2 * SCALE, (REAL)8 * SCALE, (REAL)8 * SCALE, (REAL)2 * SCALE),
+		RectF(SCALE, 6.0f * SCALE, 6.0f * SCALE, SCALE), &format, &brush);
+
+	// Control description
+	graphics.DrawString(L"strzalki: sterowanie, spacja: uchwyt", -1, &font,
+		RectF(SCALE, 8.0f * SCALE, 6.0f * SCALE, 2.0f * SCALE),
 		&format, &brush);
 
-	Font smallFont(FontFamily::GenericSansSerif(), 0.75f * SCALE, 0, Gdiplus::UnitPixel);
-	graphics.DrawString(L"strza³ki: sterowanie, spacja: uchwyt", -1, &smallFont,
-		RectF((REAL)1 * SCALE, (REAL)11 * SCALE, (REAL)18 * SCALE, (REAL)1 * SCALE),
-		&format, &brush);
-
-	graphics.DrawRectangle(&Pen(Color::Black), SCALE, SCALE, 18 * SCALE, 11 * SCALE);
+	// Control box bounding rectangle
+	graphics.DrawRectangle(&Pen(Color::Black), RectF(0.5f * SCALE, 0.5f * SCALE,
+		7.0f * SCALE, 10.0f * SCALE));
 }
 
 // Paints all window components
