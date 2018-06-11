@@ -18,6 +18,12 @@ RectF GetBoundingRect(const Arm& _arm)
 		750.0f, _arm.LenA() + ZeroLine() - _arm.MountPoint().Y + 20.0f);
 }
 
+RECT ConvertRect(const RectF rect)
+{
+	return { (INT)rect.X, (INT)rect.Y,
+		(INT)(rect.X + rect.Width), (INT)(rect.Y + rect.Height) };
+}
+
 RectF GetClientRectAlt(HWND hWnd)
 {
 	RECT temp;

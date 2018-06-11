@@ -39,17 +39,19 @@ void OnPaint(HDC hdc)
 	Bitmap bmp(window.X + window.Width, window.Y + window.Height);
 	Graphics buffer(&bmp);
 
-	buffer.FillRectangle(&SolidBrush(Color::White), window);
+	buffer.FillRectangle(&SolidBrush(Color::White), armBounds);
 	DrawArm(buffer, arm);
 	for (std::vector<Block>::const_iterator cit = blocks.begin();
 		cit != blocks.end(); cit++)
 		cit->Draw(buffer);
+	buffer.FillRectangle(&SolidBrush(Color::White), RectF(0.5f * SCALE, 
+		0.5f * SCALE, 7.0f * SCALE, 10.0f * SCALE));
 	PaintGui(buffer);
 	// Draw a single horizontal line in the middle
 	buffer.DrawLine(&Pen(Color::Black),
 		PointF(window.X, window.Y + 0.8f * window.Height),
 		PointF(window.X + window.Width, window.Y + 0.8f * window.Height));
-	buffer.DrawRectangle(&Pen(Color::Red), armBounds);
+	//buffer.DrawRectangle(&Pen(Color::Red), armBounds);
 
 	Graphics graphics(hdc);
 	graphics.DrawImage(&bmp, 0, 0);
