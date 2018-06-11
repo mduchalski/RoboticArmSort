@@ -13,7 +13,7 @@ public:
 	void Increment(const double, const double);
 	bool AttemptGrab(Block&);
 	bool AttemptLayDown(Block&);
-	bool IsMounted();
+	bool IsMounted() const;
 	
 	// Determining dimensions
 	PointF MountPoint() const;

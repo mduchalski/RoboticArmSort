@@ -14,7 +14,7 @@ Animation::Animation(const UINT _timerId, const double _maxSpeed)
 }
 
 void Animation::OnTick(HWND hWnd, Arm& _arm, std::vector<Block>& _blocks,
-	std::queue<AnimationActionCont>& actions)
+	std::queue<AnimationActionCont>& actions, bool ignoreConflicts)
 {
 	// Handle interfacing with the queue
 	if (actions.empty() && action.finished && action.action)
@@ -47,7 +47,7 @@ void Animation::OnTick(HWND hWnd, Arm& _arm, std::vector<Block>& _blocks,
 	if (InConflict(arm, blocks) || !_arm.InRect(armBounds))
 	{
 		arm.Increment(-alfaMove, -betaMove);
-		if (!action.action)
+		if (!action.action && !ignoreConflicts)
 			Stop(hWnd);
 		if (action.action == VerticalCheck)
 		{
@@ -104,7 +104,7 @@ void Animation::Move(HWND hWnd, const Arm& _arm)
 	if (action.action == DirectMove)
 	{
 		alfaTarget = action.parameter;
-		betaTarget = action.retVal; // retVal used as a second parameter
+		betaTarget = action.retVal;
 	}
 	else
 	{

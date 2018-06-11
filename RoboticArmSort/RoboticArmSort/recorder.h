@@ -8,14 +8,21 @@
 class Recorder
 {
 public:
-	void StartRecording(const std::vector<Block>&);
-	void StartPlayback(std::queue<AnimationActionCont>&);
-	void OnKeypush(const Arm&);
+	Recorder();
+
+	void StartRecording(const std::vector<Block>&, const Arm&);
+	void StopRecording();
+	void StartPlayback(HWND, Animation&, 
+		std::queue<AnimationActionCont>&, std::vector<Block>&);
+	void StopPlayback(std::queue<AnimationActionCont>&);
+	void OnKeypush(const WPARAM, const Arm&, bool);
+
+	bool IsPlaying() const;
 
 private:
 	std::vector<Block> blocksSnapshot;
 	std::queue<AnimationActionCont> actionsBuffer;
-	bool isRecording;
+	bool isRecording, isPlaying;
 };
 
 #endif

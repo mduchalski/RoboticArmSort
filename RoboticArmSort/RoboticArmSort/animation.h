@@ -26,7 +26,7 @@ public:
 
 	// Basic actions and status checks
 	void OnTick(HWND, Arm&, std::vector<Block>&, 
-		std::queue<AnimationActionCont>& actions);
+		std::queue<AnimationActionCont>& actions, bool);
 	void SetMaxSpeed(const double);
 	void Start(HWND); 
 	void UpdateSpeed(Arm&);

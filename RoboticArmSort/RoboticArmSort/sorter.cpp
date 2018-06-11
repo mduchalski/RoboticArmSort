@@ -83,28 +83,23 @@ void Sorter::Swap(std::queue<AnimationActionCont>& _actionsQueue,
 	_actionsQueue.push(AnimationActionCont{ HorizontalMove, a, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalGrab, 0.0f, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalMove, ZeroLine() -
-		3.0f * MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT,
-		0.0f, false });
+		3.0f * MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ HorizontalMove, park, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalLayDown, 0.0f, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalMove, ZeroLine() -
-		3.0f * MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT,
-		0.0f, false });
+		3.0f * MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ HorizontalMove, b, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalGrab, 0.0f, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalMove, ZeroLine() -
-		3.0f * MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT,
-		0.0f, false });
+		3.0f * MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ HorizontalMove, a, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalLayDown, 0.0f, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalMove, ZeroLine() -
-		3.0f * MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT,
-		0.0f, false });
+		3.0f * MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ HorizontalMove, park, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalGrab, 0.0f, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalMove, ZeroLine() -
-		3.0f * MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT,
-		0.0f, false });
+		3.0f * MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ HorizontalMove, b, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalLayDown, 0.0f, 0.0f, false });
 }

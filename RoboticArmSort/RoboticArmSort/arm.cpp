@@ -51,7 +51,7 @@ bool Arm::AttemptLayDown(Block& block)
 	return false;
 }
 
-bool Arm::IsMounted()
+bool Arm::IsMounted() const
 {
 	return grabbedHeight > 1.0f;
 }

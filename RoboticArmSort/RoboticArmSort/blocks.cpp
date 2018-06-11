@@ -51,16 +51,14 @@ REAL Block::HighLine() const
 }
 
 // Distrubutes blocks with random height evenly in the permitted area
-std::vector<Block> RandBlocks()
+void RandBlocks(std::vector<Block>& _blocks)
 {
-	std::vector<Block> result;
+	_blocks.clear();
 	srand((unsigned int)time(NULL));
 
-	for (REAL i = CenterLine() + BLOCKS_OFFSET + 3.5f * BLOCK_WIDTH;
-		i < armBounds.X + armBounds.Width - BLOCK_WIDTH; 
+	for (REAL i = BLOCKS_OFFSET + 3.5f * BLOCK_WIDTH;
+		i < armBounds.X + armBounds.Width - BLOCK_WIDTH - CenterLine(); 
 		i += 1.5f * BLOCK_WIDTH)
-		result.push_back(Block(i, MIN_BLOCK_HEIGHT + (REAL)
+		_blocks.push_back(Block(i, MIN_BLOCK_HEIGHT + (REAL)
 			(rand() % (int)(MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT - 20))));
-
-	return result;
 }

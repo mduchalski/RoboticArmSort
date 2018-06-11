@@ -19,11 +19,11 @@ public:
 	REAL RightLine() const;
 	REAL HighLine() const;
 
-private:
+public:
 	REAL height, relativePos;
 	bool grabbedByArm;
 };
 
-std::vector<Block> RandBlocks();
+void RandBlocks(std::vector<Block>&);
 
 #endif
