@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "RoboticArmSort.h"
 #include "painting.h"
 #include "drawing.h"
@@ -17,10 +17,10 @@ void PaintGui(Graphics& graphics)
 	format.SetAlignment(StringAlignment::StringAlignmentCenter);
 
 	graphics.DrawString(L"Tryb pracy", -1, &font,
-	RectF((REAL)2* SCALE, (REAL)2 * SCALE, (REAL)8 * SCALE, (REAL)2 * SCALE),
-	&format, &brush);
+		RectF((REAL)2 * SCALE, (REAL)2 * SCALE, (REAL)8 * SCALE, (REAL)2 * SCALE),
+		&format, &brush);
 
-	graphics.DrawString(L"Prêdkoœæ", -1, &font,
+	graphics.DrawString(L"PrÃªdkoÅ“Ã¦", -1, &font,
 		RectF((REAL)2 * SCALE, (REAL)5 * SCALE, (REAL)8 * SCALE, (REAL)2 * SCALE),
 		&format, &brush);
 
@@ -29,7 +29,7 @@ void PaintGui(Graphics& graphics)
 		&format, &brush);
 
 	Font smallFont(FontFamily::GenericSansSerif(), 0.75f * SCALE, 0, Gdiplus::UnitPixel);
-	graphics.DrawString(L"strza³ki: sterowanie, spacja: uchwyt", -1, &smallFont,
+	graphics.DrawString(L"strzaÂ³ki: sterowanie, spacja: uchwyt", -1, &smallFont,
 		RectF((REAL)1 * SCALE, (REAL)11 * SCALE, (REAL)18 * SCALE, (REAL)1 * SCALE),
 		&format, &brush);
 

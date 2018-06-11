@@ -6,8 +6,8 @@
 #include "arm.h"
 #include "blocks.h"
 
-enum AnimationAction { Nothing = 0, HorizontalMove, VerticalMove, VerticalGrab, 
-	VerticalLayDown, VerticalCheck };
+enum AnimationAction { Nothing = 0, DirectMove, HorizontalMove, VerticalMove, 
+	VerticalGrab, VerticalLayDown, VerticalCheck };
 
 struct AnimationActionCont
 {

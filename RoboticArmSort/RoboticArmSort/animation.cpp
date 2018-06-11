@@ -100,11 +100,18 @@ void Animation::Move(HWND hWnd, const Arm& _arm)
 		target = PointF(_arm.EndPoint().X, action.parameter);
 	else if (action.action != Nothing)
 		target = PointF(_arm.MountPoint().X, ZeroLine() + 50.0f);
-	ZeroLine();
-	_arm.MountPoint();
 
-	alfaTarget = GetAlfaTarget(target, _arm);
-	betaTarget = GetBetaTarget(target, _arm);
+	if (action.action == DirectMove)
+	{
+		alfaTarget = action.parameter;
+		betaTarget = action.retVal; // retVal used as a second parameter
+	}
+	else
+	{
+		alfaTarget = GetAlfaTarget(target, _arm);
+		betaTarget = GetBetaTarget(target, _arm);
+	}
+	
 
 	alfaMove = (alfaTarget > _arm.Alfa()) ? 1.0 : -1.0;
 	betaMove = (betaTarget > _arm.Beta()) ? 1.0 : -1.0;

@@ -155,6 +155,7 @@
     <ClInclude Include="blocks.h" />
     <ClInclude Include="misc.h" />
     <ClInclude Include="painting.h" />
+    <ClInclude Include="recorder.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RoboticArmSort.h" />
     <ClInclude Include="sorter.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="painting.cpp" />
     <ClCompile Include="RoboticArmSort.cpp" />
     <ClCompile Include="sorter.cpp" />
+    <ClCompile Include="recorder.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
