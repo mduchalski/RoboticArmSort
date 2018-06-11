@@ -44,10 +44,10 @@ void Animation::OnTick(HWND hWnd, Arm& _arm, std::vector<Block>& _blocks,
 
 	// Check for conflicts
 	arm.Increment(alfaMove, betaMove);
-	if (InConflict(arm, blocks) || !_arm.InRect(armBounds))
+	if (!ignoreConflicts && (InConflict(arm, blocks) || !_arm.InRect(armBounds)))
 	{
 		arm.Increment(-alfaMove, -betaMove);
-		if (!action.action && !ignoreConflicts)
+		if (!action.action)
 			Stop(hWnd);
 		if (action.action == VerticalCheck)
 		{
