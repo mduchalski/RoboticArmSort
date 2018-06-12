@@ -20,8 +20,8 @@ RectF GetBoundingRect(const Arm& _arm)
 
 RECT ConvertRect(const RectF rect)
 {
-	return { (INT)rect.X, (INT)rect.Y,
-		(INT)(rect.X + rect.Width), (INT)(rect.Y + rect.Height) };
+	return { (INT)rect.X - 20, (INT)rect.Y - 20,
+		(INT)(rect.X + rect.Width) + 20, (INT)(rect.Y + rect.Height) + 20 };
 }
 
 RectF GetClientRectAlt(HWND hWnd)

@@ -31,6 +31,10 @@ void PaintGui(Graphics& graphics)
 	// Control box bounding rectangle
 	graphics.DrawRectangle(&Pen(Color::Black), RectF(0.5f * SCALE, 0.5f * SCALE,
 		7.0f * SCALE, 10.0f * SCALE));
+
+	// Velocity
+	graphics.DrawString((std::to_wstring(velocity).substr(0, 3) + L"rad/s").c_str(), 
+		-1, &font, RectF(SCALE, 5.0f * SCALE, 6.0f * SCALE, SCALE), &format, &brush);
 }
 
 // Paints all window components
@@ -39,7 +43,8 @@ void OnPaint(HDC hdc)
 	Bitmap bmp(window.X + window.Width, window.Y + window.Height);
 	Graphics buffer(&bmp);
 
-	buffer.FillRectangle(&SolidBrush(Color::White), armBounds);
+	buffer.FillRectangle(&SolidBrush(Color::White), RectF(armBounds.X - 20.0f,
+		armBounds.Y - 20.0f, armBounds.Width + 40.0f, armBounds.Height + 40.0f));
 	DrawArm(buffer, arm);
 	for (std::vector<Block>::const_iterator cit = blocks.begin();
 		cit != blocks.end(); cit++)
