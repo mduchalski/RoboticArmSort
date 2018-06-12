@@ -14,6 +14,7 @@ public:
 		const std::vector<Block>&, const Arm&);
 	void Swap(std::queue<AnimationActionCont>&, const Arm&,
 		const REAL, const REAL, const REAL);
+	void KillSort(std::queue<AnimationActionCont>&);
 
 private:
 	std::vector<std::pair<REAL, REAL> > blockHeights;

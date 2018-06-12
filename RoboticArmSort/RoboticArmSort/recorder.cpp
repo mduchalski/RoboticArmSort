@@ -1,4 +1,5 @@
 #include "recorder.h"
+#include "RoboticArmSort.h"
 
 Recorder::Recorder()
 {
@@ -20,6 +21,7 @@ void Recorder::StartRecording(const std::vector<Block>& _blocks, const Arm& _arm
 void Recorder::StopRecording()
 {
 	isRecording = false;
+	EnableWindow(hwndButtons[2], TRUE);
 }
 
 void Recorder::StartPlayback(HWND hWnd, Animation& _animation,
@@ -29,6 +31,7 @@ void Recorder::StartPlayback(HWND hWnd, Animation& _animation,
 	_actionQueue = actionsBuffer;
 	_animation.Start(hWnd);
 	isPlaying = true;
+	EnableWindow(hwndButtons[3], TRUE);
 }
 
 void Recorder::StopPlayback(std::queue<AnimationActionCont>& _actionQueue)

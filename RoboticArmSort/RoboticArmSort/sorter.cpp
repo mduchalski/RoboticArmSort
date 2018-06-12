@@ -20,6 +20,7 @@ void Sorter::OnTick(std::queue<AnimationActionCont>& _actionsQueue,
 		if (isSorting)
 			FinishSort(_actionsQueue, _arm);
 		else
+			KillSort(_actionsQueue);
 			isSorting = false;
 	}
 }
@@ -102,4 +103,15 @@ void Sorter::Swap(std::queue<AnimationActionCont>& _actionsQueue,
 		3.0f * MAX_BLOCK_HEIGHT + MIN_BLOCK_HEIGHT, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ HorizontalMove, b, 0.0f, false });
 	_actionsQueue.push(AnimationActionCont{ VerticalLayDown, 0.0f, 0.0f, false });
+}
+
+void Sorter::KillSort(std::queue<AnimationActionCont>& _actionsQueue)
+{
+	isSorting = false;
+	EnableWindow(hwndButtons[2], TRUE);
+	EnableWindow(hwndButtons[3], TRUE);
+	EnableWindow(hwndButtons[4], TRUE);
+	EnableWindow(hwndSlider, TRUE);
+	while (!_actionsQueue.empty())
+		_actionsQueue.pop();
 }
