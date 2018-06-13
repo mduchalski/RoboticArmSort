@@ -48,7 +48,14 @@ void Animation::OnTick(HWND hWnd, Arm& _arm, std::vector<Block>& _blocks,
 	{
 		arm.Increment(-alfaMove, -betaMove);
 		if (!action.action)
+		{
 			Stop(hWnd);
+			EnableWindow(hwndButtons[2], TRUE);
+			EnableWindow(hwndButtons[3], TRUE);
+			EnableWindow(hwndButtons[4], TRUE);
+			EnableWindow(hwndSlider, TRUE);
+		}
+			
 		if (action.action == VerticalCheck)
 		{
 			action.finished = true;
@@ -151,7 +158,6 @@ void Animation::UpdateSpeed(Arm& _arm)
 		alfaMove = (alfaMove / betaMove) * maxSpeed / (double)(1000 / TIMER_DELAY);
 		betaMove = maxSpeed / (double)(1000 / TIMER_DELAY);
 	}
-
 }
 
 void Animation::Start(HWND hWnd)

@@ -6,6 +6,7 @@ Recorder::Recorder()
 	isRecording = isPlaying = false;
 }
 
+// Initialize recording, push first action to the queue
 void Recorder::StartRecording(const std::vector<Block>& _blocks, const Arm& _arm)
 {
 	isRecording = true;

@@ -2,6 +2,7 @@
 #include "RoboticArmSort.h"
 #include "misc.h"
 
+// Interfacing with the queue on every tick
 void Sorter::OnTick(std::queue<AnimationActionCont>& _actionsQueue,
 	const Arm& _arm)
 {
@@ -20,14 +21,20 @@ void Sorter::OnTick(std::queue<AnimationActionCont>& _actionsQueue,
 		if (isSorting)
 			FinishSort(_actionsQueue, _arm);
 		else
+		{
 			KillSort(_actionsQueue);
 			isSorting = false;
+		}
 	}
 }
 
+// Initialize sorting
 void Sorter::InitSort(HWND hWnd, std::queue<AnimationActionCont>& _actionsQueue,
-	Animation& _animation, const std::vector<Block>& _blocks, const Arm& _arm)
+	Animation& _animation, std::vector<Block>& _blocks, const Arm& _arm)
 {
+	blockHeights.clear();
+	std::sort(_blocks.begin(), _blocks.end(), SortByPos);
+
 	for (std::vector<Block>::const_iterator cit = _blocks.begin();
 		cit != _blocks.end(); cit++)
 	{
@@ -47,13 +54,10 @@ void Sorter::InitSort(HWND hWnd, std::queue<AnimationActionCont>& _actionsQueue,
 	i = 0;
 }
 
+// Finish sorting, after all block heights have been determined
 void Sorter::FinishSort(std::queue<AnimationActionCont>& _actionsQueue, 
 	const Arm& _arm)
 {
-	std::vector<std::pair<REAL, REAL> > temp = blockHeights;
-
-	std::sort(temp.begin(), temp.end(), SortByHeight);
-
 	for (std::size_t j = 0; j < blockHeights.size(); j++)
 	{
 		for (std::size_t k = 0; k < blockHeights.size() - 1; k++)
@@ -71,10 +75,10 @@ void Sorter::FinishSort(std::queue<AnimationActionCont>& _actionsQueue,
 			}
 		}
 	}
-
-	std::sort(temp.begin(), temp.end(), SortByHeight);
 }
 
+// Generate actions sequence that swaps two blocks at positions a, b, using
+// "parking" space park
 void Sorter::Swap(std::queue<AnimationActionCont>& _actionsQueue, 
 	const Arm& _arm, const REAL a, const REAL b, const REAL park)
 {
@@ -105,6 +109,7 @@ void Sorter::Swap(std::queue<AnimationActionCont>& _actionsQueue,
 	_actionsQueue.push(AnimationActionCont{ VerticalLayDown, 0.0f, 0.0f, false });
 }
 
+// Abort sorting
 void Sorter::KillSort(std::queue<AnimationActionCont>& _actionsQueue)
 {
 	isSorting = false;

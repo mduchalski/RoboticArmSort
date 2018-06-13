@@ -18,7 +18,7 @@ bool InConflict(const Arm&, const std::vector<Block>&);
 void AttemptGrab(Arm&, std::vector<Block>&);
 void AttemptLayDown(Arm&, std::vector<Block>&);
 
-bool SortByHeight(const std::pair<REAL, REAL>, const std::pair<REAL, REAL>);
+bool SortByPos(const Block, const Block);
 
 
 #endif

@@ -59,7 +59,7 @@ void AttemptLayDown(Arm& _arm, std::vector<Block>& _blocks)
 		_arm.AttemptLayDown(*it);
 }
 
-bool SortByHeight(const std::pair<REAL, REAL> a, const std::pair<REAL, REAL> b)
+bool SortByPos(const Block a, const Block b)
 {
-	return a.second < b.second;
+	return a.LeftLine() < b.LeftLine();
 }
