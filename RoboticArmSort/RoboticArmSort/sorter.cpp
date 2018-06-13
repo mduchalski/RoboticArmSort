@@ -114,7 +114,7 @@ void Sorter::KillSort(std::queue<AnimationActionCont>& _actionsQueue)
 {
 	isSorting = false;
 	EnableWindow(hwndButtons[2], TRUE);
-	EnableWindow(hwndButtons[3], TRUE);
+	//EnableWindow(hwndButtons[3], TRUE);
 	EnableWindow(hwndButtons[4], TRUE);
 	EnableWindow(hwndSlider, TRUE);
 	while (!_actionsQueue.empty())
