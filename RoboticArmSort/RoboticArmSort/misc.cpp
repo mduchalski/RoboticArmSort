@@ -64,7 +64,7 @@ bool SortByPos(const Block a, const Block b)
 	return a.LeftLine() < b.LeftLine();
 }
 
-bool SortByHeight(const Block a, const Block b)
+bool SortByHeight(const std::pair<REAL, REAL> a, const std::pair<REAL, REAL> b)
 {
-	return a.Height() < b.Height();
+	return a.second < b.second;
 }
