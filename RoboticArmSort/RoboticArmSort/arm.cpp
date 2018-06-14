@@ -135,9 +135,6 @@ REAL Arm::LenB() const
 
 void DrawArm(Graphics& graphics, const Arm _arm)
 {
-	// Draw a "magnet" shaped arm mount
-	DrawMagnet(graphics, &SolidBrush(_arm.colorA), _arm.MountPoint(),
-		_arm.width / 2.0f, ARM_OFFSET, 3.0f * _arm.width);
 	// Draw two arm parts
 	DrawWideCLine(graphics, &SolidBrush(_arm.colorA), _arm.MiddlePoint(), 
 		_arm.EndPoint(), _arm.width);
@@ -147,6 +144,9 @@ void DrawArm(Graphics& graphics, const Arm _arm)
 	DrawMagnet(graphics, &SolidBrush(_arm.colorB), _arm.EndPoint(),
 		min(BLOCK_WIDTH, _arm.width / 2.0f), 
 		MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT, BLOCK_WIDTH);
+	// Draw a "magnet" shaped arm mount
+	DrawMagnet(graphics, &SolidBrush(_arm.colorA), _arm.MountPoint(),
+		_arm.width / 2.0f, ARM_OFFSET, 3.0f * _arm.width);
 	// Draw block if one is connected
 	graphics.FillRectangle(&SolidBrush(Color::DarkBlue), _arm.MountLine(),
 		_arm.ConnectionLine(), BLOCK_WIDTH, _arm.grabbedHeight);
