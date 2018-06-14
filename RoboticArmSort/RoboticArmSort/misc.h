@@ -19,6 +19,7 @@ void AttemptGrab(Arm&, std::vector<Block>&);
 void AttemptLayDown(Arm&, std::vector<Block>&);
 
 bool SortByPos(const Block, const Block);
+bool SortByHeight(const Block, const Block);
 
 
 #endif

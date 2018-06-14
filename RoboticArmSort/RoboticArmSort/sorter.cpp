@@ -34,6 +34,8 @@ void Sorter::InitSort(HWND hWnd, std::queue<AnimationActionCont>& _actionsQueue,
 {
 	blockHeights.clear();
 	std::sort(_blocks.begin(), _blocks.end(), SortByPos);
+	if (std::is_sorted(_blocks.begin(), _blocks.end(), SortByHeight))
+		KillSort(_actionsQueue);
 
 	for (std::vector<Block>::const_iterator cit = _blocks.begin();
 		cit != _blocks.end(); cit++)

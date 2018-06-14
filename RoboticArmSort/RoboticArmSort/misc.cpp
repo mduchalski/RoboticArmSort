@@ -63,3 +63,8 @@ bool SortByPos(const Block a, const Block b)
 {
 	return a.LeftLine() < b.LeftLine();
 }
+
+bool SortByHeight(const Block a, const Block b)
+{
+	return a.Height() < b.Height();
+}
